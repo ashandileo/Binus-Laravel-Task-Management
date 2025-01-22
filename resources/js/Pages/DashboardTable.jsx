@@ -27,6 +27,7 @@ import { Button } from "@/components/ui/button";
 import { EllipsisVertical } from "lucide-react";
 import DashboardDialogCreateTask from "./DashboardDialogCreateTask";
 import DashboardDialogUpdateTask from "./DashboardDialogUpdateTask";
+import DashboardDialogDeleteTask from "./DashboardDialogDeleteTask";
 
 const DashboardTable = ({ tasks }) => {
     return (
@@ -67,6 +68,8 @@ const DashboardTable = ({ tasks }) => {
 
 const TaskRow = ({ task }) => {
     const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
+
     return (
         <>
             <TableRow>
@@ -89,7 +92,11 @@ const TaskRow = ({ task }) => {
                             >
                                 Edit
                             </DropdownMenuItem>
-                            <DropdownMenuItem>Delete</DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() => setIsDeleteModalOpen(true)}
+                            >
+                                Delete
+                            </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </TableCell>
@@ -97,6 +104,12 @@ const TaskRow = ({ task }) => {
             <DashboardDialogUpdateTask
                 isOpen={isModalOpen}
                 onClose={setIsModalOpen}
+                task={task}
+            />
+
+            <DashboardDialogDeleteTask
+                isOpen={isDeleteModalOpen}
+                onClose={setIsDeleteModalOpen}
                 task={task}
             />
         </>

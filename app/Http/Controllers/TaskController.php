@@ -75,4 +75,14 @@ class TaskController extends Controller
 
         return redirect()->back()->with('success', 'Task updated successfully!');
     }
+
+    public function destroy($id)
+    {
+        // Ensure only the owner can delete their task
+        $task = Task::where('user_id', auth()->id())->findOrFail($id);
+
+        $task->delete();
+
+        return redirect()->back()->with('success', 'Task deleted successfully!');
+    }
 }
