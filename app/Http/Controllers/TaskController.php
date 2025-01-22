@@ -29,7 +29,7 @@ class TaskController extends Controller
         ]);
 
         // Convert due_date to MySQL format (YYYY-MM-DD)
-        $formattedDueDate = Carbon::parse($request->due_date)->format('Y-m-d');
+        $formattedDueDate = Carbon::parse($request->due_date)->setTimezone(config('app.timezone'))->format('Y-m-d');
 
         // Determine status based on progress
         $status = $request->progress >= 100 ? 'Completed' : 'In Progress';

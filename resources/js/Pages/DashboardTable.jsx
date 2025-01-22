@@ -26,6 +26,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { EllipsisVertical } from "lucide-react";
 import DashboardDialogCreateTask from "./DashboardDialogCreateTask";
+import DashboardDialogUpdateTask from "./DashboardDialogUpdateTask";
 
 const DashboardTable = ({ tasks }) => {
     return (
@@ -55,47 +56,50 @@ const DashboardTable = ({ tasks }) => {
                     </TableHeader>
                     <TableBody>
                         {tasks?.map((task) => (
-                            <TableRow key={task?.id}>
-                                <TableCell className="font-medium">
-                                    {task?.task_name}
-                                </TableCell>
-                                <TableCell>{task?.status}</TableCell>
-                                <TableCell>{task?.progress}%</TableCell>
-                                <TableCell>
-                                    {new Date(
-                                        task?.due_date
-                                    ).toLocaleDateString()}
-                                </TableCell>
-                                <TableCell className="text-right">
-                                    <DropdownMenu>
-                                        <DropdownMenuTrigger>
-                                            <Button variant="ghost">
-                                                <EllipsisVertical />
-                                            </Button>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent>
-                                            <DropdownMenuLabel>
-                                                Task Action
-                                            </DropdownMenuLabel>
-                                            <DropdownMenuSeparator />
-                                            <DropdownMenuItem>
-                                                View Detail
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem>
-                                                Edit
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem>
-                                                Delete
-                                            </DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
-                                </TableCell>
-                            </TableRow>
+                            <TaskRow key={task?.id} task={task} />
                         ))}
                     </TableBody>
                 </Table>
             </CardContent>
         </Card>
+    );
+};
+
+const TaskRow = ({ task }) => {
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+    return (
+        <>
+            <TableRow>
+                <TableCell className="font-medium">{task?.task_name}</TableCell>
+                <TableCell>{task?.status}</TableCell>
+                <TableCell>{task?.progress}%</TableCell>
+                <TableCell>{task?.due_date}</TableCell>
+                <TableCell className="text-right">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger>
+                            <Button variant="ghost">
+                                <EllipsisVertical />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuLabel>Task Action</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem
+                                onClick={() => setIsModalOpen(true)}
+                            >
+                                Edit
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>Delete</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </TableCell>
+            </TableRow>
+            <DashboardDialogUpdateTask
+                isOpen={isModalOpen}
+                onClose={setIsModalOpen}
+                task={task}
+            />
+        </>
     );
 };
 
