@@ -15,6 +15,16 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { EllipsisVertical } from "lucide-react";
 
 const DashboardTable = () => {
     return (
@@ -43,7 +53,30 @@ const DashboardTable = () => {
                             </TableCell>
                             <TableCell>In Progress</TableCell>
                             <TableCell>50%</TableCell>
-                            <TableCell className="text-right">Action</TableCell>
+                            <TableCell className="text-right">
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger>
+                                        <Button variant="ghost">
+                                            <EllipsisVertical />
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent>
+                                        <DropdownMenuLabel>
+                                            Task Action
+                                        </DropdownMenuLabel>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuItem>
+                                            View Detail
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            Edit
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            Delete
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
