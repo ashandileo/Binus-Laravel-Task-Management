@@ -30,10 +30,15 @@ const DashboardTable = () => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Tasks</CardTitle>
-                <CardDescription>
-                    All tasks that need to be completed
-                </CardDescription>
+                <div className="flex items-center justify-between">
+                    <div>
+                        <CardTitle>Tasks</CardTitle>
+                        <CardDescription>
+                            All tasks that need to be completed
+                        </CardDescription>
+                    </div>
+                    <Button>Create Task</Button>
+                </div>
             </CardHeader>
             <CardContent>
                 <Table>
