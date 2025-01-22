@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { EllipsisVertical } from "lucide-react";
+import DashboardDialogCreateTask from "./DashboardDialogCreateTask";
 
 const DashboardTable = () => {
     return (
@@ -37,7 +38,7 @@ const DashboardTable = () => {
                             All tasks that need to be completed
                         </CardDescription>
                     </div>
-                    <Button>Create Task</Button>
+                    <DashboardDialogCreateTask />
                 </div>
             </CardHeader>
             <CardContent>
