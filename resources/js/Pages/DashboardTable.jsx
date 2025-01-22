@@ -68,6 +68,7 @@ const DashboardTable = ({ tasks }) => {
                     <TableHeader>
                         <TableRow>
                             <TableHead>Task Name</TableHead>
+                            <TableHead>Phase</TableHead>
                             <TableHead>Status</TableHead>
                             <TableHead>Progress</TableHead>
                             <TableHead>Due Date</TableHead>
@@ -75,8 +76,8 @@ const DashboardTable = ({ tasks }) => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {filteredTasks.length > 0 ? (
-                            filteredTasks.map((task) => (
+                        {filteredTasks?.length > 0 ? (
+                            filteredTasks?.map((task) => (
                                 <TaskRow key={task.id} task={task} />
                             ))
                         ) : (
@@ -105,6 +106,14 @@ const TaskRow = ({ task }) => {
             <TableRow>
                 <TableCell className="font-medium">{task?.task_name}</TableCell>
                 <TableCell>{task?.status}</TableCell>
+                <TableCell>
+                    {task?.status === "In Progress" &&
+                    task?.due_date &&
+                    new Date(task?.due_date) < new Date()
+                        ? "Overdue"
+                        : "Ontrack"}
+                    {/* Overdue */}
+                </TableCell>
                 <TableCell>
                     <div className="flex flex-col gap-2">
                         <Progress value={task?.progress} />

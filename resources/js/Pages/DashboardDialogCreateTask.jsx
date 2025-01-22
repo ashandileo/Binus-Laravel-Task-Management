@@ -146,7 +146,6 @@ const DashboardDialogCreateTask = () => {
                                         onSelect={(date) =>
                                             setData("due_date", date)
                                         }
-                                        disabled={(date) => date < new Date()} // Prevent past dates
                                         initialFocus
                                     />
                                 </PopoverContent>
