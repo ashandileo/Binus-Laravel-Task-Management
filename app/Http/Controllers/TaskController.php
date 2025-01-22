@@ -44,4 +44,35 @@ class TaskController extends Controller
 
         return redirect()->back()->with('success', 'Task created successfully!');
     }
+
+    /**
+     * Update an existing task
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'task_name' => 'required|string|max:255',
+            'progress'  => 'required|integer|min:0|max:100',
+            'due_date'  => 'required|date',
+        ]);
+
+        // Find the task, ensure it belongs to the authenticated user
+        $task = Task::where('user_id', auth()->id())->findOrFail($id);
+
+        // Convert due_date to MySQL format (YYYY-MM-DD)
+        $formattedDueDate = Carbon::parse($request->due_date)->setTimezone(config('app.timezone'))->format('Y-m-d');
+
+        // Determine status based on progress
+        $status = $request->progress >= 100 ? 'Completed' : 'In Progress';
+
+        // Update the task
+        $task->update([
+            'task_name' => $request->task_name,
+            'status'    => $status, // Auto-update status
+            'progress'  => $request->progress,
+            'due_date'  => $formattedDueDate, // Store formatted date
+        ]);
+
+        return redirect()->back()->with('success', 'Task updated successfully!');
+    }
 }
