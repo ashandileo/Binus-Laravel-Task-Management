@@ -49,6 +49,7 @@ const DashboardTable = () => {
                             <TableHead>Task Name</TableHead>
                             <TableHead>Status</TableHead>
                             <TableHead>Progress</TableHead>
+                            <TableHead>Due Date</TableHead>
                             <TableHead className="text-right">Action</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -59,6 +60,7 @@ const DashboardTable = () => {
                             </TableCell>
                             <TableCell>In Progress</TableCell>
                             <TableCell>50%</TableCell>
+                            <TableCell>Today</TableCell>
                             <TableCell className="text-right">
                                 <DropdownMenu>
                                     <DropdownMenuTrigger>
