@@ -4,10 +4,22 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+
 // Import Carbon for date formatting
 
 class TaskController extends Controller
 {
+    public function index()
+    {
+        // Fetch tasks only for the authenticated user
+        $tasks = Task::where('user_id', auth()->id())->latest()->get();
+
+        return Inertia::render('Dashboard', [
+            'tasks' => $tasks, // Pass tasks to the frontend
+        ]);
+    }
+
     public function store(Request $request)
     {
         $request->validate([

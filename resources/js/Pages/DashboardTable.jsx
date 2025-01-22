@@ -27,7 +27,7 @@ import { Button } from "@/components/ui/button";
 import { EllipsisVertical } from "lucide-react";
 import DashboardDialogCreateTask from "./DashboardDialogCreateTask";
 
-const DashboardTable = () => {
+const DashboardTable = ({ tasks }) => {
     return (
         <Card>
             <CardHeader>
@@ -54,38 +54,44 @@ const DashboardTable = () => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        <TableRow>
-                            <TableCell className="font-medium">
-                                Mengerjakan tugas kuliah
-                            </TableCell>
-                            <TableCell>In Progress</TableCell>
-                            <TableCell>50%</TableCell>
-                            <TableCell>Today</TableCell>
-                            <TableCell className="text-right">
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger>
-                                        <Button variant="ghost">
-                                            <EllipsisVertical />
-                                        </Button>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent>
-                                        <DropdownMenuLabel>
-                                            Task Action
-                                        </DropdownMenuLabel>
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem>
-                                            View Detail
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem>
-                                            Edit
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem>
-                                            Delete
-                                        </DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                            </TableCell>
-                        </TableRow>
+                        {tasks?.map((task) => (
+                            <TableRow key={task?.id}>
+                                <TableCell className="font-medium">
+                                    {task?.task_name}
+                                </TableCell>
+                                <TableCell>{task?.status}</TableCell>
+                                <TableCell>{task?.progress}%</TableCell>
+                                <TableCell>
+                                    {new Date(
+                                        task?.due_date
+                                    ).toLocaleDateString()}
+                                </TableCell>
+                                <TableCell className="text-right">
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger>
+                                            <Button variant="ghost">
+                                                <EllipsisVertical />
+                                            </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent>
+                                            <DropdownMenuLabel>
+                                                Task Action
+                                            </DropdownMenuLabel>
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuItem>
+                                                View Detail
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                Edit
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                Delete
+                                            </DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                </TableCell>
+                            </TableRow>
+                        ))}
                     </TableBody>
                 </Table>
             </CardContent>
