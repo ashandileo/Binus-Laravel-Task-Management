@@ -28,6 +28,7 @@ import { EllipsisVertical } from "lucide-react";
 import DashboardDialogCreateTask from "./DashboardDialogCreateTask";
 import DashboardDialogUpdateTask from "./DashboardDialogUpdateTask";
 import DashboardDialogDeleteTask from "./DashboardDialogDeleteTask";
+import { Progress } from "@/Components/ui/progress";
 
 const DashboardTable = ({ tasks }) => {
     return (
@@ -75,7 +76,12 @@ const TaskRow = ({ task }) => {
             <TableRow>
                 <TableCell className="font-medium">{task?.task_name}</TableCell>
                 <TableCell>{task?.status}</TableCell>
-                <TableCell>{task?.progress}%</TableCell>
+                <TableCell>
+                    <div className="flex flex-col gap-2">
+                        <Progress value={task?.progress} />
+                        {task?.progress}%
+                    </div>
+                </TableCell>
                 <TableCell>{task?.due_date}</TableCell>
                 <TableCell className="text-right">
                     <DropdownMenu>
