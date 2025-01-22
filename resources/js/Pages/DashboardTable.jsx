@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Table,
     TableBody,
@@ -24,6 +24,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/Components/ui/input";
 import { EllipsisVertical } from "lucide-react";
 import DashboardDialogCreateTask from "./DashboardDialogCreateTask";
 import DashboardDialogUpdateTask from "./DashboardDialogUpdateTask";
@@ -31,6 +32,13 @@ import DashboardDialogDeleteTask from "./DashboardDialogDeleteTask";
 import { Progress } from "@/Components/ui/progress";
 
 const DashboardTable = ({ tasks }) => {
+    const [searchTerm, setSearchTerm] = useState("");
+
+    // Filter tasks based on search input
+    const filteredTasks = tasks.filter((task) =>
+        task.task_name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <Card>
             <CardHeader>
@@ -45,6 +53,16 @@ const DashboardTable = ({ tasks }) => {
                 </div>
             </CardHeader>
             <CardContent>
+                {/* Task Name Filter Input */}
+                <div className="mb-3">
+                    <Input
+                        type="text"
+                        placeholder="Search by task name..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full p-2 border rounded-md"
+                    />
+                </div>
                 <Table>
                     <TableCaption>.</TableCaption>
                     <TableHeader>
@@ -57,9 +75,20 @@ const DashboardTable = ({ tasks }) => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {tasks?.map((task) => (
-                            <TaskRow key={task?.id} task={task} />
-                        ))}
+                        {filteredTasks.length > 0 ? (
+                            filteredTasks.map((task) => (
+                                <TaskRow key={task.id} task={task} />
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell
+                                    colSpan="5"
+                                    className="text-center py-4"
+                                >
+                                    No tasks found.
+                                </TableCell>
+                            </TableRow>
+                        )}
                     </TableBody>
                 </Table>
             </CardContent>
